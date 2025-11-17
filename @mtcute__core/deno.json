@@ -1,0 +1,25 @@
+{
+    "name": "@mtcute/core",
+    "version": "0.26.3",
+    "exports": {
+        ".": "./index.ts",
+        "./utils.js": "./utils/index.ts",
+        "./client.js": "./highlevel/client.ts",
+        "./worker.js": "./highlevel/worker/index.ts",
+        "./methods.js": "./highlevel/methods.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "@fuman/io": "npm:@fuman/io@0.0.17",
+        "@fuman/net": "npm:@fuman/net@0.0.17",
+        "@fuman/utils": "npm:@fuman/utils@0.0.17",
+        "@types/events": "npm:@types/events@3.0.0",
+        "long": "npm:long@5.2.3"
+    },
+    "publish": {
+        
+    }
+}

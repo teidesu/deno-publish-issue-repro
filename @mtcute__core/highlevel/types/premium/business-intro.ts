@@ -1,0 +1,37 @@
+import type { tl } from '@mtcute/tl';
+import type { Sticker } from "../media/sticker.ts";
+import { makeInspectable } from "../../utils/inspectable.ts";
+import { memoizeGetters } from "../../utils/memoize.ts";
+import { parseDocument } from "../media/document-utils.ts";
+/**
+ * Information about a "business intro" – text that is displayed
+ * when a user opens a chat with a business account for the first time.
+ */
+export class BusinessIntro {
+    constructor(readonly raw: tl.RawBusinessIntro) { }
+    /**
+     * Title of the intro.
+     */
+    get title(): string {
+        return this.raw.title;
+    }
+    /**
+     * Description of the intro.
+     */
+    get description(): string {
+        return this.raw.description;
+    }
+    /**
+     * Sticker of the intro.
+     */
+    get sticker(): Sticker | null {
+        if (!this.raw.sticker || this.raw.sticker._ === 'documentEmpty')
+            return null;
+        const doc = parseDocument(this.raw.sticker);
+        if (doc.type !== 'sticker')
+            return null;
+        return doc;
+    }
+}
+makeInspectable(BusinessIntro);
+memoizeGetters(BusinessIntro, ['sticker']);

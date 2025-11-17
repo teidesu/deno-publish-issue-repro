@@ -1,0 +1,15 @@
+{
+    "name": "@mtcute/wasm",
+    "version": "0.24.3",
+    "exports": {
+        ".": "./index.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {},
+    "publish": {
+        
+    }
+}

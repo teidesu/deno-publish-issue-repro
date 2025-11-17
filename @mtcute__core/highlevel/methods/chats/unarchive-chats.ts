@@ -1,0 +1,27 @@
+import type { tl } from '@mtcute/tl';
+import type { MaybeArray } from "../../../types/utils.ts";
+import type { ITelegramClient } from "../../client.types.ts";
+import type { InputPeerLike } from "../../types/index.ts";
+import { resolvePeer } from "../users/resolve-peer.ts";
+/**
+ * Unarchive one or more chats
+ *
+ * @param chats  Chat ID(s), username(s), phone number(s), `"me"` or `"self"`
+ */
+export async function unarchiveChats(client: ITelegramClient, chats: MaybeArray<InputPeerLike>): Promise<void> {
+    if (!Array.isArray(chats))
+        chats = [chats];
+    const folderPeers: tl.TypeInputFolderPeer[] = [];
+    for (const chat of chats) {
+        folderPeers.push({
+            _: 'inputFolderPeer',
+            peer: await resolvePeer(client, chat),
+            folderId: 0,
+        });
+    }
+    const res = await client.call({
+        _: 'folders.editPeerFolders',
+        folderPeers,
+    });
+    client.handleClientUpdate(res);
+}

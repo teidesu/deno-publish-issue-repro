@@ -1,0 +1,22 @@
+import type { ITelegramClient } from "../../client.types.ts";
+import { CollectibleInfo } from "../../types/misc/collectible-info.ts";
+import { normalizePhoneNumber } from "../../utils/misc-utils.ts";
+// @available=user
+/**
+ * Get information about a fragment collectible
+ */
+export async function getCollectibleInfo(client: ITelegramClient, kind: 'phone' | 'username', item: string): Promise<CollectibleInfo> {
+    const res = await client.call({
+        _: 'fragment.getCollectibleInfo',
+        collectible: kind === 'phone'
+            ? {
+                _: 'inputCollectiblePhone',
+                phone: normalizePhoneNumber(item),
+            }
+            : {
+                _: 'inputCollectibleUsername',
+                username: item,
+            },
+    });
+    return new CollectibleInfo(res);
+}

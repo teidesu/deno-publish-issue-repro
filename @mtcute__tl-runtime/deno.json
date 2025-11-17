@@ -1,0 +1,18 @@
+{
+    "name": "@mtcute/tl-runtime",
+    "version": "0.24.3",
+    "exports": {
+        ".": "./index.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "long": "npm:long@5.2.3",
+        "@fuman/utils": "npm:@fuman/utils@0.0.17"
+    },
+    "publish": {
+        
+    }
+}

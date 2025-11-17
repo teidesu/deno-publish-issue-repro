@@ -1,0 +1,55 @@
+import type { TlReaderMap, TlWriterMap } from '@mtcute/tl-runtime';
+import { generateReaderCodeForTlEntries } from "./codegen/reader.ts";
+import { generateWriterCodeForTlEntries } from "./codegen/writer.ts";
+import { parseTlToEntries } from "./parse.ts";
+function evalForResult<T>(js: string): T {
+    // eslint-disable-next-line ts/no-implied-eval, no-new-func, ts/no-unsafe-call
+    return new Function(js)() as T;
+}
+/**
+ * Patch runtime TL schema (readers and writers map) with the given schema.
+ *
+ * Entries in the schema will override the ones in the existing one.
+ * Original readers and writers will be preserved, new ones will be returned.
+ *
+ * @param schema  Schema containing new entries
+ * @param readers  Original readers map
+ * @param writers  Original writers map
+ * @returns  New readers and writers map
+ */
+export function patchRuntimeTlSchema(schema: string, readers: TlReaderMap, writers: TlWriterMap): {
+    readerMap: TlReaderMap;
+    writerMap: TlWriterMap;
+} {
+    const entries = parseTlToEntries(schema, { parseMethodTypes: true });
+    const readersCode = generateReaderCodeForTlEntries(entries, {
+        variableName: '_',
+        includeMethods: false,
+        includeMethodResults: true,
+    });
+    const writersCode = generateWriterCodeForTlEntries(entries, {
+        variableName: '_',
+        includePrelude: true,
+    });
+    const newReaders = evalForResult<TlReaderMap>(readersCode.replace('var _=', 'return'));
+    const newWriters = evalForResult<TlWriterMap>(writersCode.replace('var _=', 'return'));
+    return {
+        readerMap: {
+            ...readers,
+            ...newReaders,
+            _results: {
+                ...readers._results,
+                ...newReaders._results,
+            },
+        },
+        // @ts-expect-error ts is not smart enough
+        writerMap: {
+            ...writers,
+            ...newWriters,
+            _bare: {
+                ...writers._bare,
+                ...newWriters._bare,
+            },
+        },
+    };
+}

@@ -1,0 +1,17 @@
+{
+    "name": "@mtcute/dispatcher",
+    "version": "0.26.3",
+    "exports": {
+        ".": "./index.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "@fuman/utils": "npm:@fuman/utils@0.0.17"
+    },
+    "publish": {
+        
+    }
+}

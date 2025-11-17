@@ -1,0 +1,24 @@
+{
+  "name": "@mtcute/tl",
+  "version": "218.0.0",
+  "exports": {
+    "./compat": "./compat/index.d.ts",
+    "./binary/reader.js": "./binary/reader.js",
+    "./binary/rsa-keys.js": "./binary/rsa-keys.js",
+    "./binary/writer.js": "./binary/writer.js",
+    "./compat/reader.js": "./compat/reader.js",
+    ".": "./index.js",
+    "./raw-errors.json": "./raw-errors.json",
+    "./mtp-schema.json": "./mtp-schema.json",
+    "./api-schema.json": "./api-schema.json",
+    "./app-config.json": "./app-config.json"
+  },
+  "imports": {
+    "long": "npm:long@5.2.3"
+  },
+  "publish": {
+    "exclude": [
+      "!../dist"
+    ]
+  }
+}

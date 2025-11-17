@@ -1,0 +1,24 @@
+{
+    "name": "@mtcute/deno",
+    "version": "0.26.3",
+    "exports": {
+        ".": "./index.ts",
+        "./utils.js": "./utils.ts",
+        "./methods.js": "./methods.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "@db/sqlite": "jsr:@db/sqlite@0.12.0",
+        "@fuman/utils": "npm:@fuman/utils@0.0.17",
+        "@fuman/net": "npm:@fuman/net@0.0.17",
+        "@fuman/io": "npm:@fuman/io@0.0.17",
+        "@fuman/deno": "jsr:@fuman/deno@0.0.17",
+        "@std/io": "jsr:@std/io@0.223.0"
+    },
+    "publish": {
+        
+    }
+}

@@ -1,0 +1,23 @@
+import type { tl } from '@mtcute/tl';
+import type { ITelegramClient } from "../../client.types.ts";
+import type { PreCheckoutQuery } from "../../types/updates/pre-checkout-query.ts";
+import Long from 'long';
+import { assertTrue } from "../../../utils/type-assertions.ts";
+/**
+ * Answer a pre-checkout query.
+ *
+ * @param queryId  Pre-checkout query ID
+ */
+export async function answerPreCheckoutQuery(client: ITelegramClient, queryId: tl.Long | PreCheckoutQuery, params?: {
+    /** If pre-checkout is rejected, error message to show to the user */
+    error?: string;
+}): Promise<void> {
+    const { error } = params ?? {};
+    const r = await client.call({
+        _: 'messages.setBotPrecheckoutResults',
+        queryId: Long.isLong(queryId) ? queryId : queryId.queryId,
+        success: !error,
+        error,
+    });
+    assertTrue('messages.setBotPrecheckoutResults', r);
+}

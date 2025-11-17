@@ -1,0 +1,17 @@
+{
+    "name": "@mtcute/markdown-parser",
+    "version": "0.26.3",
+    "exports": {
+        ".": "./index.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "long": "npm:long@5.2.3"
+    },
+    "publish": {
+        
+    }
+}

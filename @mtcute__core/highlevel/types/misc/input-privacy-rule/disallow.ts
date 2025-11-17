@@ -1,0 +1,30 @@
+import type { tl } from '@mtcute/tl';
+import type { MaybeArray } from "../../../../types/utils.ts";
+import type { InputPeerLike } from "../../peers/peer.ts";
+import type { InputPrivacyRuleChatParticipants, InputPrivacyRuleUsers } from "./types.ts";
+/** Disallow all users */
+export const all: tl.RawInputPrivacyValueDisallowAll = { _: 'inputPrivacyValueDisallowAll' };
+/** Disallow contacts */
+export const contacts: tl.RawInputPrivacyValueDisallowContacts = { _: 'inputPrivacyValueDisallowContacts' };
+/**
+ * Disallow users specified in `users`
+ *
+ * @param users  Users to disallow
+ */
+export function users(users: MaybeArray<InputPeerLike>): InputPrivacyRuleUsers {
+    return {
+        allow: false,
+        users: Array.isArray(users) ? users : [users],
+    };
+}
+/**
+ * Disallow participants of chats specified in `chats`
+ *
+ * @param chats  Chats to disallow
+ */
+export function chatParticipants(chats: MaybeArray<InputPeerLike>): InputPrivacyRuleChatParticipants {
+    return {
+        allow: false,
+        chats: Array.isArray(chats) ? chats : [chats],
+    };
+}

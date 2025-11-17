@@ -1,0 +1,17 @@
+{
+    "workspace": [
+        "./@mtcute__convert",
+        "./@mtcute__core",
+        "./@mtcute__deno",
+        "./@mtcute__dispatcher",
+        "./@mtcute__file-id",
+        "./@mtcute__html-parser",
+        "./@mtcute__i18n",
+        "./@mtcute__markdown-parser",
+        "./@mtcute__tl",
+        "./@mtcute__tl-runtime",
+        "./@mtcute__tl-utils",
+        "./@mtcute__wasm",
+        "./@mtcute__web"
+    ]
+}

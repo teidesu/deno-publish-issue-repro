@@ -1,0 +1,31 @@
+import type { ITelegramClient } from "../../client.types.ts";
+import type { ArrayPaginated, InputPeerLike } from "../../types/index.ts";
+import { PeersIndex } from "../../types/index.ts";
+import { Boost } from "../../types/premium/boost.ts";
+import { makeArrayPaginated } from "../../utils/index.ts";
+import { resolvePeer } from "../users/resolve-peer.ts";
+/**
+ * Get boosts of a channel
+ */
+export async function getBoosts(client: ITelegramClient, peerId: InputPeerLike, params?: {
+    /**
+     * Offset for pagination
+     */
+    offset?: string;
+    /**
+     * Maximum number of boosters to fetch
+     *
+     * @default  100
+     */
+    limit?: number;
+}): Promise<ArrayPaginated<Boost, string>> {
+    const { offset = '', limit = 100 } = params ?? {};
+    const res = await client.call({
+        _: 'premium.getBoostsList',
+        peer: await resolvePeer(client, peerId),
+        offset,
+        limit,
+    });
+    const peers = PeersIndex.from(res);
+    return makeArrayPaginated(res.boosts.map(it => new Boost(it, peers)), res.count, res.nextOffset);
+}

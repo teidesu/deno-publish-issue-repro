@@ -1,0 +1,27 @@
+import type { MaybeArray } from "../../../types/utils.ts";
+import type { ITelegramClient } from "../../client.types.ts";
+import type { InputPeerLike } from "../../types/index.ts";
+import { assertTypeIs } from "../../../utils/type-assertions.ts";
+import { PeersIndex, Story } from "../../types/index.ts";
+import { resolvePeer } from "../users/resolve-peer.ts";
+/**
+ * Get one or more stories by their IDs
+ *
+ * @param peerId  Peer ID whose stories to fetch
+ * @param storyIds  Story IDs
+ */
+export async function getStoriesById(client: ITelegramClient, peerId: InputPeerLike, storyIds: MaybeArray<number>): Promise<Story[]> {
+    if (!Array.isArray(storyIds))
+        storyIds = [storyIds];
+    const res = await client.call({
+        _: 'stories.getStoriesByID',
+        peer: await resolvePeer(client, peerId),
+        id: storyIds,
+    });
+    const peers = PeersIndex.from(res);
+    const stories = res.stories.map((it) => {
+        assertTypeIs('getProfileStories', it, 'storyItem');
+        return new Story(it, peers);
+    });
+    return stories;
+}

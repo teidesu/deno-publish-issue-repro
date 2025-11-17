@@ -1,0 +1,26 @@
+{
+    "name": "@mtcute/web",
+    "version": "0.26.3",
+    "exports": {
+        ".": "./index.ts",
+        "./utils.js": "./utils.ts",
+        "./methods.js": "./methods.ts"
+    },
+    "exclude": [
+        "**/*.{test,bench,test-utils}.ts",
+        "**/__fixtures__/**"
+    ],
+    "imports": {
+        "@fuman/net": "npm:@fuman/net@0.0.17"
+    },
+    "publish": {
+        
+    },
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "WebWorker"
+        ]
+    }
+}
